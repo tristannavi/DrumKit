@@ -20,14 +20,26 @@ const keyPressEvent = (key) => {
     }
 }
 
+//Adds pressed class then removes it to make the button flash
+const buttonAnimation = (key) => {
+    const pressedButton = document.querySelector("." + key)
+    pressedButton.classList.add("pressed")
+    setTimeout(function () {
+        pressedButton.classList.remove("pressed")
+    }, 100)
+
+}
+
 //When the button is clicked, play sound
 document.querySelectorAll(".drum").forEach(x => x.addEventListener("click", async function () {
     const sound = keyPressEvent(this.innerHTML)
     await new Audio(sound).play()
+    buttonAnimation(this.innerHTML)
 }))
 
 //When the key is pressed, play sound
 document.addEventListener("keydown", async function (event) {
     const sound = keyPressEvent(event.key)
     await new Audio(sound).play()
+    buttonAnimation(event.key)
 })
